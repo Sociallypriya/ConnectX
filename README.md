@@ -16,11 +16,13 @@ ConnectX is a full-stack real-time video conferencing web application that enabl
 Frontend:
 
 React (Vite)
+
 Material UI
 
 Backend:
 
 Node.js
+
 Express.js
 
 Database:
@@ -30,6 +32,7 @@ MongoDB Atlas
 Real-Time & Communication:
 
 WebRTC
+
 Socket.IO
 
 Authentication:
@@ -39,6 +42,7 @@ bcrypt
 Deployment:
 
 Render
+
 ⚙️ Architecture Overview
 WebRTC handles peer-to-peer media streaming
 Socket.IO acts as a signaling server
@@ -47,12 +51,13 @@ MongoDB stores user profiles and meeting history
 
 📸 Screenshots (Add yours)
 ![Home Page](./screenshots/home.png)
-![Home Page](./screenshots/chat.png)
-![Home Page](./screenshots/history.png)
+![Home Page](./screenshots/sign_up_sign_in.png)
 ![Home Page](./screenshots/apna_vedio_call.png)
 ![Home Page](./screenshots/lobby.png)
-![Home Page](./screenshots/sign_up_sign_in.png)
 ![Home Page](./screenshots/vedio_call.png)
+![Home Page](./screenshots/chat.png)
+![Home Page](./screenshots/history.png)
+
 
 🧪 Installation & Setup
 git clone https://github.com/Sociallypriya/ConnectX
