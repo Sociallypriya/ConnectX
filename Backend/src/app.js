@@ -3,7 +3,6 @@ dotenv.config();
 import express from "express";
 import {createServer} from "node:http";
 
-import {Server} from "socket.io";
 import mongoose from "mongoose";
 import { connectToSocket } from "./controllers/socketManager.js";
 
@@ -12,7 +11,7 @@ import userRoutes from "./routes/users.route.js";
 
 const app = express();
 const server = createServer(app);
-const io = connectToSocket(server);
+connectToSocket(server);
 
 app.set("port",(process.env.PORT || 8000))
 app.use(cors());
@@ -23,11 +22,26 @@ app.use("/api/v1/users", userRoutes);
 
 
 const start = async()=>{
-    const connectionDB = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MONGO Connected DB Host: ${connectionDB.connection.host}`)
-    server.listen(app.get("port"),()=>{
-        console.log("LISTENIN ON PORT 8000")
+    server.listen(app.get("port"), () => {
+        console.log(`Server running on port ${app.get("port")}`);
     });
+
+    if (process.env.MONGO_URI) {
+        try {
+            const connectionDB = await mongoose.connect(process.env.MONGO_URI);
+            console.log(`MONGO Connected DB Host: ${connectionDB.connection.host}`)
+        } catch (error) {
+            if (error.code === "ENOTFOUND" && error.syscall === "querySrv") {
+                console.error("MongoDB connection failed: the Atlas SRV hostname could not be resolved.");
+                console.error("Video calls can still use Socket.IO, but login/history need a working Backend/.env MONGO_URI.");
+                console.error("Copy a fresh connection string from MongoDB Atlas, or check your DNS/network connection.");
+            } else {
+                console.error("MongoDB connection failed:", error.message);
+            }
+        }
+    } else {
+        console.error("MONGO_URI is missing. Video calls can still use Socket.IO, but login/history need Backend/.env.");
+    }
 }
 
 start();

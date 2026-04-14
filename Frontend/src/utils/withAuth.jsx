@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 
-const withAuth = (WrappedComponent ) => {
+const withAuth = (Component) => {
     const AuthComponent = (props) => {
         const router = useNavigate();
 
@@ -18,7 +18,11 @@ const withAuth = (WrappedComponent ) => {
             }
         }, [])
 
-        return <WrappedComponent {...props} />
+        if (!isAuthenticated()) {
+            return null;
+        }
+
+        return React.createElement(Component, props);
     }
 
     return AuthComponent;

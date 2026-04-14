@@ -43,7 +43,7 @@ export default function Authentication() {
         try {
             if (formState === 0) {
 
-                let result = await handleLogin(username, password)
+                await handleLogin(username, password)
 
 
             }

@@ -13,10 +13,11 @@ function HomeComponent() {
     const [meetingCode, setMeetingCode] = useState("");
 
 
-    const {addToUserHistory} = useContext(AuthContext);
+    const {addToUserHistory, userData, setUserData} = useContext(AuthContext);
     let handleJoinVideoCall = async () => {
+        if (!meetingCode.trim()) return;
         await addToUserHistory(meetingCode)
-        navigate(`/${meetingCode}`)
+        navigate(`/${meetingCode.trim()}`)
     }
 
     return (
@@ -39,8 +40,15 @@ function HomeComponent() {
                     </IconButton>
                     <p>History</p>
 
+                    <div style={{ marginInline: "16px", textAlign: "right" }}>
+                        <p style={{ fontWeight: "bold" }}>{userData?.name || "Profile"}</p>
+                        <p style={{ fontSize: "0.85rem" }}>{userData?.username || ""}</p>
+                    </div>
+
                     <Button onClick={() => {
                         localStorage.removeItem("token")
+                        localStorage.removeItem("user")
+                        setUserData({})
                         navigate("/auth")
                     }}>
                         Logout
@@ -58,7 +66,7 @@ function HomeComponent() {
 
                         <div style={{ display: 'flex', gap: "10px" }}>
 
-                            <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
+                            <TextField value={meetingCode} onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
                             <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
 
                         </div>
@@ -73,4 +81,6 @@ function HomeComponent() {
 }
 
 
-export default withAuth(HomeComponent)
+const AuthenticatedHomeComponent = withAuth(HomeComponent);
+
+export default AuthenticatedHomeComponent;
