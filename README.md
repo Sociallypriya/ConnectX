@@ -16,13 +16,11 @@ ConnectX is a full-stack real-time video conferencing web application that enabl
 Frontend:
 
 React (Vite)
-
 Material UI
 
 Backend:
 
 Node.js
-
 Express.js
 
 Database:
@@ -32,7 +30,6 @@ MongoDB Atlas
 Real-Time & Communication:
 
 WebRTC
-
 Socket.IO
 
 Authentication:
