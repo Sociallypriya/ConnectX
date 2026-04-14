@@ -1,47 +1,54 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
-import {createServer} from "node:http";
-
+import { createServer } from "node:http";
 import mongoose from "mongoose";
-import { connectToSocket } from "./controllers/socketManager.js";
-
 import cors from "cors";
+
+import { connectToSocket } from "./controllers/socketManager.js";
 import userRoutes from "./routes/users.route.js";
 
 const app = express();
 const server = createServer(app);
+
+// Socket setup
 connectToSocket(server);
 
-app.set("port",(process.env.PORT || 8000))
+// Middlewares
+app.set("port", process.env.PORT || 8000);
 app.use(cors());
-app.use(express.json({limit: "40kb"}));
-app.use(express.urlencoded({limit: "40kb",extended: true }));
+app.use(express.json({ limit: "40kb" }));
+app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
+// Routes
 app.use("/api/v1/users", userRoutes);
 
+// ✅ START FUNCTION (FIXED)
+const start = async () => {
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is missing");
+    }
 
-const start = async()=>{
+    console.log("MONGO_URI exists?", !!process.env.MONGO_URI);
+
+    // ✅ Connect DB FIRST
+    const connectionDB = await mongoose.connect(process.env.MONGO_URI);
+
+    console.log(
+      `✅ MongoDB Connected: ${connectionDB.connection.host}`
+    );
+
+    // ✅ Start server AFTER DB connects
     server.listen(app.get("port"), () => {
-        console.log(`Server running on port ${app.get("port")}`);
+      console.log(`🚀 Server running on port ${app.get("port")}`);
     });
 
-    if (process.env.MONGO_URI) {
-        try {
-            const connectionDB = await mongoose.connect(process.env.MONGO_URI);
-            console.log(`MONGO Connected DB Host: ${connectionDB.connection.host}`)
-        } catch (error) {
-            if (error.code === "ENOTFOUND" && error.syscall === "querySrv") {
-                console.error("MongoDB connection failed: the Atlas SRV hostname could not be resolved.");
-                console.error("Video calls can still use Socket.IO, but login/history need a working Backend/.env MONGO_URI.");
-                console.error("Copy a fresh connection string from MongoDB Atlas, or check your DNS/network connection.");
-            } else {
-                console.error("MongoDB connection failed:", error.message);
-            }
-        }
-    } else {
-        console.error("MONGO_URI is missing. Video calls can still use Socket.IO, but login/history need Backend/.env.");
-    }
-}
+  } catch (error) {
+    console.error("❌ MongoDB connection failed:", error.message);
+    process.exit(1); // stop app if DB fails
+  }
+};
 
 start();
