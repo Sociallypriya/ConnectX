@@ -1,17 +1,17 @@
-🧑‍💻 ConnectX – Real-Time Video Conferencing App
+ConnectX – Real-Time Video Conferencing App
 
 ConnectX is a full-stack real-time video conferencing web application that enables users to connect, communicate, and collaborate seamlessly using modern web technologies.
 
-🚀 Features
-🔐 User Authentication (bcrypt)
-🎥 Real-time Video & Audio Calling (WebRTC)
-🖥️ Screen Sharing
-💬 In-call Chat System
-🔇 Mute / 🎥 Video Toggle Controls
-🔢 Join via Unique Meeting Codes
-📜 Meeting History Tracking
-⚡ Low-latency communication using Socket.IO
-🛠️ Tech Stack
+Features
+User Authentication (bcrypt)
+Real-time Video & Audio Calling (WebRTC)
+Screen Sharing
+In-call Chat System
+Mute / Video Toggle Controls
+Join via Unique Meeting Codes
+Meeting History Tracking
+Low-latency communication using Socket.IO
+Tech Stack
 
 Frontend:
 
@@ -40,13 +40,13 @@ Deployment:
 
 Render
 
-⚙️ Architecture Overview
+Architecture Overview
 WebRTC handles peer-to-peer media streaming
 Socket.IO acts as a signaling server
 REST APIs manage authentication and meeting data
 MongoDB stores user profiles and meeting history
 
-📸 Screenshots (Add yours)
+Screenshots (Add yours)
 ![Home Page](./screenshots/home.png)
 ![Home Page](./screenshots/sign_up_sign_in.png)
 ![Home Page](./screenshots/apna_vedio_call.png)
@@ -56,7 +56,7 @@ MongoDB stores user profiles and meeting history
 ![Home Page](./screenshots/history.png)
 
 
-🧪 Installation & Setup
+Installation & Setup
 git clone https://github.com/Sociallypriya/ConnectX
 cd ConnectX
 
@@ -70,18 +70,18 @@ cd frontend
 npm install
 npm run dev
 
-🌐 Environment Variables
+Environment Variables
 
 Create .env in backend:
 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_secret
 
-📌 Future Improvements
+Future Improvements
 Group video optimization (SFU)
 Recording feature
 Notifications system
 Mobile responsiveness enhancement
 
-👩‍💻 Author
-Priya Singh
+Author
+Priya Kumari
